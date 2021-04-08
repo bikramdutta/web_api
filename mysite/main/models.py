@@ -10,6 +10,6 @@ class Tutorial(models.Model):
 	tutorial_published = models.DateTimeField('date published', default = datetime.now())
 
 	def __str__(self):
-		return 'Tutorial- ' + self.tutorial_title 
+		return 'Tutorial- ' + self.tutorial_title
 
 
