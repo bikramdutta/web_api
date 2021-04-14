@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from main.views import update_model_detail_view, JsonCBV,JsonCBV2, SerializedDetailView, SerializedListView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('', update_model_detail_view),  
+    path('json/cbv', JsonCBV.as_view()),  
+    path('json/cbv2', JsonCBV2.as_view()),
+    path('json/serialView1', SerializedDetailView.as_view()),
+    path('json/serialView2', SerializedListView.as_view()),
 ]
+ 
