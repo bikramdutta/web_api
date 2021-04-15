@@ -57,19 +57,19 @@ class JsonCBV2(View, JsonResponseMixin):
 		return self.render_to_json_response(data)
 
 
-class SerializedDetailView(View):
-	def get(self, request, *args, **kwargs):
-		obj = UpdateModel.objects.get(id=1)
-		data = {
-			'user' : obj.user.username,
-			'content' : obj.content
-		}
+# class SerializedDetailView(View):
+# 	def get(self, request, *args, **kwargs):
+# 		obj = UpdateModel.objects.get(id=1)
+# 		data = {
+# 			'user' : obj.user.username,
+# 			'content' : obj.content
+# 		}
 
-		# Sending back a json response for it to work with REST API
-		# return JsonResponse(data)
+# 		# Sending back a json response for it to work with REST API
+# 		# return JsonResponse(data)
 
-		json_data = json.dumps(data, default=str)
-		return HttpResponse(json_data, content_type='application/json')
+# 		json_data = json.dumps(data, default=str)
+# 		return HttpResponse(json_data, content_type='application/json')
 
 
 # class SerializedListView(View):
@@ -84,8 +84,19 @@ class SerializedDetailView(View):
 # 		return HttpResponse(data, content_type='application/json')
 
 
+class SerializedDetailView(View):
+	def get(self, request, *args, **kwargs):
+		obj = UpdateModel.objects.get(id=1)
+		# We have added a serialization method for instance
+		# in the model itself.
+		json_data = obj.serialize()
+		
+		return HttpResponse(json_data, content_type='application/json')
+
 class SerializedListView(View):
 	def get(self, request, *args, **kwargs):
 		qs = UpdateModel.objects.all()
+		# Model Manager is configured to return serialized data for 
+		# query set.
 		json_data = UpdateModel.objects.all().serialize()
 		return HttpResponse(json_data, content_type='application/json')

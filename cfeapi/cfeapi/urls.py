@@ -16,14 +16,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main.views import update_model_detail_view, JsonCBV,JsonCBV2, SerializedDetailView, SerializedListView
-
+from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Add API specific urls here, in the main configuration url
+    # We want the following urls:-
+    # 1. api/main ---> list of updates (list of UpdateModel Objects)
+    # 2. api/main/1 ---> detail/attributes of a specific UpdateModel object (object with id = 1)
+
+    path('api/main/', include('main.api.urls')),
+
     # path('', update_model_detail_view),  
-    path('json/cbv', JsonCBV.as_view()),  
-    path('json/cbv2', JsonCBV2.as_view()),
-    path('json/serialView1', SerializedDetailView.as_view()),
-    path('json/serialView2', SerializedListView.as_view()),
+    # path('json/cbv', JsonCBV.as_view()),  
+    # path('json/cbv2', JsonCBV2.as_view()),
+    # path('json/serialView1', SerializedDetailView.as_view()),
+    # path('json/serialView2', SerializedListView.as_view()),
 ]
  
